@@ -79,7 +79,7 @@ export class UsersController {
   async remove(@Param('id', ParseIntPipe) id: number) {
     const user = await this.usersService.findOne(id);
     if (!user) {
-      throw new NotFoundException('нет твкого пользователя');
+      throw new NotFoundException('Такого пользователя не существует');
     }
     return this.usersService.remove(+id);
   }
