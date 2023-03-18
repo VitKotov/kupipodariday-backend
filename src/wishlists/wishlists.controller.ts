@@ -43,12 +43,20 @@ export class WishlistsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWishlist: UpdateWishlistDto) {
-    return this.wishlistsService.update(+id, updateWishlist);
+  async updateWishlistlists(
+    @Body() updateWishlistDto: UpdateWishlistDto,
+    @Param('id') id: string,
+    @Req() req,
+  ) {
+    return this.wishlistsService.updateWishlist(
+      +id,
+      updateWishlistDto,
+      req.user.id,
+    );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.wishlistsService.remove(+id);
+  async deleteWishlist(@Req() req, @Param('id') id: number) {
+    return await this.wishlistsService.removeWishlist(id, req.user.id);
   }
 }

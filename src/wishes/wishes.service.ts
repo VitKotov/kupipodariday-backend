@@ -85,10 +85,22 @@ export class WishesService {
   }
 
   async update(id: number, ...param) {
-    return await this.wishRepository.update(id, param[0]);
+    await this.wishRepository.update(id, param[0]);
+    return {};
   }
 
   async remove(id: number) {
-    return await this.wishRepository.delete({ id });
+    const wish = await this.wishRepository.findOne({
+      where: { id },
+      relations: [
+        'owner',
+        'offers',
+        'offers.user',
+        'offers.user.wishes',
+        'offers.user.offers',
+      ],
+    });
+    await this.wishRepository.delete({ id });
+    return wish;
   }
 }

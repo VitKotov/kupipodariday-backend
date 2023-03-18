@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -53,20 +53,16 @@ export class UsersService {
     });
   }
 
-  async update(id: number, updateUser: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto) {
     let newPassword;
-    const password = updateUser.password;
+    const password = updateUserDto.password;
     if (password) {
       newPassword = await this.hashedPassword(password);
-      return this.userRepository.update(id, {
-        ...updateUser,
-        password: newPassword,
-      });
     }
-    const updatedUser = await this.userRepository.findOne({
-      where: { id: id },
-    });
-    return updatedUser;
+
+    await this.userRepository.update({ id }, updateUserDto);
+
+    return await this.findOne(id);
   }
 
   async remove(id: number): Promise<void> {

@@ -68,11 +68,9 @@ export class UsersController {
   }
 
   @Patch('me')
-  async update(
-    @Req() req,
-    @Body() updateUser: UpdateUserDto,
-  ) {
-    return updateUser;
+  async updateMe(@Req() req, @Body() updateUser: UpdateUserDto) {
+    const { id } = req.user;
+    return this.usersService.update(id, updateUser);
   }
 
   @Delete(':id')
