@@ -62,7 +62,7 @@ export class WishesService {
 
   async findManyById(createWishlistDto) {
     return await this.wishRepository.find({
-      where: { id: In(createWishlistDto.itemsId || []) },
+      where: { id: In(createWishlistDto) },
     });
   }
 
