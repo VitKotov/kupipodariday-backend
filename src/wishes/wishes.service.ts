@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateWishDto } from './dto/create-wish.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Wish } from './entities/wishes.entity';
-import { In, MoreThan, Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 import { User } from '../users/entities/users.entity';
 
 @Injectable()
@@ -60,10 +60,8 @@ export class WishesService {
     });
   }
 
-  async findManyById(createWishlistDto) {
-    return await this.wishRepository.find({
-      where: { id: In(createWishlistDto) },
-    });
+  async findManyById(itemsId) {
+    return await this.wishRepository.find(itemsId);
   }
 
   async findOne(wishId: number): Promise<Wish> {

@@ -66,9 +66,8 @@ export class WishlistsService {
     userId: number,
   ) {
     const wishlist = await this.getWishlistsById(id.toString());
-
     const wishes = await this.wishesService.findManyById(
-      updateWishlistDto.itemsId || [],
+      updateWishlistDto.itemsId,
     );
 
     return await this.wishListRepository.save({

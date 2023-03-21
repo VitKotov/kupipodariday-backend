@@ -17,7 +17,6 @@ import { JwtGuard } from '../guards/jwt.guard';
 import { WishesService } from '../wishes/wishes.service';
 import { Wish } from '../wishes/entities/wishes.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UpdateResult } from 'typeorm';
 
 @UseGuards(JwtGuard)
 @Controller('users')
